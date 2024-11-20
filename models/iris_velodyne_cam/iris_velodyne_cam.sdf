@@ -42,8 +42,8 @@
       <uri>model://velodyne_hdl32</uri>
       <pose>0 0 0.1 0 0 0</pose>
     </include>
-    <joint name="velodyne_joint" type="revolute">
-      <child>velodyne::link</child>
+    <joint name="velodyne_joint" type="fixed">
+      <child>velodyne::base</child>
       <parent>iris::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>
