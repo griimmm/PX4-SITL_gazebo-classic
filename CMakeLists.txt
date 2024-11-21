@@ -37,7 +37,7 @@ include(GNUInstallDirs)
 #######################
 
 option(BUILD_GSTREAMER_PLUGIN "enable gstreamer plugin" ON)
-option(BUILD_ROS2_PLUGINS "Enable building ROS2 dependent plugins" OFF)
+option(BUILD_ROS2_PLUGINS "Enable building ROS2 dependent plugins" ON)
 option(GENERATE_ROS_MODELS "Generate model sdf for ROS environment" OFF)
 
 option(SEND_VISION_ESTIMATION_DATA "Send Mavlink VISION_POSITION_ESTIMATE msgs" OFF)
@@ -380,7 +380,6 @@ add_library(gazebo_parachute_plugin SHARED src/gazebo_parachute_plugin.cpp)
 add_library(gazebo_pose_sniffer_plugin SHARED src/gazebo_pose_sniffer_plugin.cpp)
 add_library(gazebo_airship_dynamics_plugin SHARED src/gazebo_airship_dynamics_plugin.cpp)
 add_library(gazebo_drop_plugin SHARED src/gazebo_drop_plugin.cpp)
-add_library(gazebo_velodyne_plugin SHARED src/gazebo_velodyne_plugin.cpp)
 
 set(plugins
   gazebo_airspeed_plugin
@@ -411,7 +410,6 @@ set(plugins
   gazebo_pose_sniffer_plugin
   gazebo_airship_dynamics_plugin
   gazebo_drop_plugin
-  gazebo_velodyne_plugin
   )
 
 foreach(plugin ${plugins})
@@ -423,9 +421,16 @@ target_link_libraries(gazebo_opticalflow_plugin ${OpticalFlow_LIBS})
 # Current plugins that can be used with ROS interface: gazebo_motor_failure_plugin
 if (BUILD_ROS2_PLUGINS)
   add_library(gazebo_motor_failure_plugin SHARED src/gazebo_motor_failure_plugin.cpp)
+  add_library(gazebo_velodyne_plugin SHARED src/gazebo_velodyne_plugin.cpp)
+
   target_link_libraries(gazebo_motor_failure_plugin ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
+  target_link_libraries(gazebo_velodyne_plugin ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
+
   list(APPEND plugins gazebo_motor_failure_plugin)
   message(STATUS "adding gazebo_motor_failure_plugin to build")
+
+  list(APPEND plugins gazebo_velodyne_plugin)
+  message(STATUS "adding gazebo_velodyne_plugin to build")
 
   include_directories(
     include
@@ -435,6 +440,11 @@ if (BUILD_ROS2_PLUGINS)
   )
 
   target_link_libraries(gazebo_motor_failure_plugin
+    ${ament_LIBRARIES}
+    ${rclcpp_LIBRARIES}
+    ${GAZEBO_libraries}
+  )
+  target_link_libraries(gazebo_velodyne_plugin
     ${ament_LIBRARIES}
     ${rclcpp_LIBRARIES}
     ${GAZEBO_libraries}
