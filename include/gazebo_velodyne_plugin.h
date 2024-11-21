@@ -55,7 +55,7 @@
 namespace gazebo
 {
 
-  class GazeboRosVelodyneLaser : public SensorPlugin
+  class GazeboVelodynePlugin : public SensorPlugin
   {
     struct ScanPattern {
       struct Sample {
@@ -75,10 +75,10 @@ namespace gazebo
 
     /// \brief Constructor
     /// \param parent The parent entity, must be a Model or a Sensor
-    public: GazeboRosVelodyneLaser();
+    public: GazeboVelodynePlugin();
 
     /// \brief Destructor
-    public: ~GazeboRosVelodyneLaser();
+    public: ~GazeboVelodynePlugin();
 
     /// \brief Load the plugin
     /// \param take in SDF root element

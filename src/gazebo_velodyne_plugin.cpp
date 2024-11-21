@@ -53,25 +53,25 @@
 namespace gazebo
 {
 // Register this plugin with the simulator
-GZ_REGISTER_SENSOR_PLUGIN(GazeboRosVelodyneLaser)
+GZ_REGISTER_SENSOR_PLUGIN(GazeboVelodynePlugin)
 
 ////////////////////////////////////////////////////////////////////////////////
 // Constructor
-GazeboRosVelodyneLaser::GazeboRosVelodyneLaser() : min_range_(0), max_range_(0), gaussian_noise_(0)
+GazeboVelodynePlugin::GazeboVelodynePlugin() : min_range_(0), max_range_(0), gaussian_noise_(0)
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Destructor
-GazeboRosVelodyneLaser::~GazeboRosVelodyneLaser()
+GazeboVelodynePlugin::~GazeboVelodynePlugin()
 {
 }
 
-std::vector<GazeboRosVelodyneLaser::ScanPattern::Sample>
-GazeboRosVelodyneLaser::SampleAngleIntervalEvenly(ignition::math::Angle _min_angle,
+std::vector<GazeboVelodynePlugin::ScanPattern::Sample>
+GazeboVelodynePlugin::SampleAngleIntervalEvenly(ignition::math::Angle _min_angle,
                                                   ignition::math::Angle _max_angle,
                                                   int _sample_count) {
-  std::vector<GazeboRosVelodyneLaser::ScanPattern::Sample> samples;
+  std::vector<GazeboVelodynePlugin::ScanPattern::Sample> samples;
   samples.reserve(_sample_count);
   if (_sample_count > 1) {
     ignition::math::Angle angle_step = (_max_angle - _min_angle) / (_sample_count - 1);
@@ -84,12 +84,12 @@ GazeboRosVelodyneLaser::SampleAngleIntervalEvenly(ignition::math::Angle _min_ang
   return samples;
 }
 
-std::vector<GazeboRosVelodyneLaser::ScanPattern::Sample>
-GazeboRosVelodyneLaser::SampleAngleInterval(sdf::ElementPtr _sdf,
+std::vector<GazeboVelodynePlugin::ScanPattern::Sample>
+GazeboVelodynePlugin::SampleAngleInterval(sdf::ElementPtr _sdf,
                                             ignition::math::Angle _min_angle,
                                             ignition::math::Angle _max_angle,
                                             int _sample_count) {
-  using ScanPattern = GazeboRosVelodyneLaser::ScanPattern;
+  using ScanPattern = GazeboVelodynePlugin::ScanPattern;
   const ignition::math::Angle kEpsilonAngle{1e-6};
   if (_sdf->HasElement("angles")) {
     std::vector<ScanPattern::Sample> samples;
@@ -119,7 +119,7 @@ GazeboRosVelodyneLaser::SampleAngleInterval(sdf::ElementPtr _sdf,
   return SampleAngleIntervalEvenly(_min_angle, _max_angle, _sample_count);
 }
 
-void GazeboRosVelodyneLaser::LoadScanPattern(sensors::SensorPtr _parent, sdf::ElementPtr _sdf) {
+void GazeboVelodynePlugin::LoadScanPattern(sensors::SensorPtr _parent, sdf::ElementPtr _sdf) {
   sensors::GpuRaySensorPtr parent_gpu_ray_sensor = std::dynamic_pointer_cast<sensors::GpuRaySensor>(_parent);
   if (parent_gpu_ray_sensor) {
     if (_sdf->HasElement("scan")) {
@@ -215,14 +215,14 @@ void GazeboRosVelodyneLaser::LoadScanPattern(sensors::SensorPtr _parent, sdf::El
     return;
   }
 
-  gzthrow("GazeboRosVelodyneLaser controller requires either a Ray Sensor or a GPU Ray Sensor as its parent");
+  gzthrow("GazeboVelodynePlugin controller requires either a Ray Sensor or a GPU Ray Sensor as its parent");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Load the controller
-void GazeboRosVelodyneLaser::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
+void GazeboVelodynePlugin::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 {
-  gzdbg << "Loading GazeboRosVelodyneLaser\n";
+  gzdbg << "Loading GazeboVelodynePlugin\n";
 
   // Initialize Gazebo node
   gazebo_node_ = gazebo::transport::NodePtr(new gazebo::transport::Node());
@@ -290,13 +290,13 @@ void GazeboRosVelodyneLaser::Load(sensors::SensorPtr _parent, sdf::ElementPtr _s
 
   // TODO lazy subscribe. Find a way to subscribe to the gazebo topic if there are
   //      ros subscribers present.
-  sub_ = gazebo_node_->Subscribe(parent_sensor_->Topic(), &GazeboRosVelodyneLaser::OnScan, this);
+  sub_ = gazebo_node_->Subscribe(parent_sensor_->Topic(), &GazeboVelodynePlugin::OnScan, this);
 
   RCLCPP_INFO(ros_node_->get_logger(), "Velodyne %slaser plugin ready");
-  gzdbg << "GazeboRosVelodyneLaser LOADED\n";
+  gzdbg << "GazeboVelodynePlugin LOADED\n";
 }
 
-void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
+void GazeboVelodynePlugin::OnScan(ConstLaserScanStampedPtr& _msg)
 {
   const double maxRange = _msg->scan().range_max();
   const double minRange = _msg->scan().range_min();
@@ -340,7 +340,7 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
 
   size_t j = 0;
   uint8_t *ptr = msg.data.data();
-  using ScanPattern = GazeboRosVelodyneLaser::ScanPattern;
+  using ScanPattern = GazeboVelodynePlugin::ScanPattern;
   for (const ScanPattern::Sample & vsample : scan_pattern_.vertical_samples) {
     for (const ScanPattern::Sample & hsample : scan_pattern_.horizontal_samples) {
       double range = INFINITY;

@@ -420,13 +420,13 @@ target_link_libraries(gazebo_opticalflow_plugin ${OpticalFlow_LIBS})
 # If BUILD_ROS2_PLUGINS set to ON, build plugins that have ROS dependencies
 # Current plugins that can be used with ROS interface: gazebo_motor_failure_plugin
 if (BUILD_ROS2_PLUGINS)
-  add_library(gazebo_motor_failure_plugin SHARED src/gazebo_motor_failure_plugin.cpp)
+  # add_library(gazebo_motor_failure_plugin SHARED src/gazebo_motor_failure_plugin.cpp)
   add_library(gazebo_velodyne_plugin SHARED src/gazebo_velodyne_plugin.cpp)
 
-  target_link_libraries(gazebo_motor_failure_plugin ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
+  # target_link_libraries(gazebo_motor_failure_plugin ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
   target_link_libraries(gazebo_velodyne_plugin ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
 
-  list(APPEND plugins gazebo_motor_failure_plugin)
+  # list(APPEND plugins gazebo_motor_failure_plugin)
   message(STATUS "adding gazebo_motor_failure_plugin to build")
 
   list(APPEND plugins gazebo_velodyne_plugin)
@@ -439,11 +439,11 @@ if (BUILD_ROS2_PLUGINS)
     ${rclcpp_INCLUDE_DIRS}
   )
 
-  target_link_libraries(gazebo_motor_failure_plugin
-    ${ament_LIBRARIES}
-    ${rclcpp_LIBRARIES}
-    ${GAZEBO_libraries}
-  )
+  # target_link_libraries(gazebo_motor_failure_plugin
+  #   ${ament_LIBRARIES}
+  #   ${rclcpp_LIBRARIES}
+  #   ${GAZEBO_libraries}
+  # )
   target_link_libraries(gazebo_velodyne_plugin
     ${ament_LIBRARIES}
     ${rclcpp_LIBRARIES}

@@ -89,6 +89,13 @@
           </range>
         </ray>
       </sensor>
+      <plugin name="GazeboVelodynePlugin" filename="libgazebo_velodyne_plugin.so">
+            <topicName>velodyne_points</topicName>
+            <frameName>velodyne</frameName>
+            <min_range>3.141592</min_range>
+            <max_range>3.141592</max_range>
+            <gaussianNoise>0.008</gaussianNoise>
+          </plugin>
     </link>
 
     <joint type="revolute" name="joint">
