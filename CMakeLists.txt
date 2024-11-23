@@ -46,6 +46,8 @@ option(SEND_ODOMETRY_DATA "Send Mavlink ODOMETRY msgs" OFF)
 ## System dependencies are found with CMake's conventions
 find_package(Boost 1.58 REQUIRED COMPONENTS system thread filesystem)
 find_package(gazebo REQUIRED)
+find_package(gazebo_ros REQUIRED)
+
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GLIB REQUIRED glib-2.0)
 # Note: If using catkin, Python 2 is found since it points
@@ -427,7 +429,7 @@ if (BUILD_ROS2_PLUGINS)
   target_link_libraries(gazebo_velodyne_plugin ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
 
   # list(APPEND plugins gazebo_motor_failure_plugin)
-  message(STATUS "adding gazebo_motor_failure_plugin to build")
+  # message(STATUS "adding gazebo_motor_failure_plugin to build")
 
   list(APPEND plugins gazebo_velodyne_plugin)
   message(STATUS "adding gazebo_velodyne_plugin to build")
@@ -437,6 +439,7 @@ if (BUILD_ROS2_PLUGINS)
     ${geometry_msgs_INCLUDE_DIRS}
     ${sensor_msgs_INCLUDE_DIRS}
     ${rclcpp_INCLUDE_DIRS}
+    ${gazebo_ros_INCLUDE_DIRS}$
   )
 
   # target_link_libraries(gazebo_motor_failure_plugin
