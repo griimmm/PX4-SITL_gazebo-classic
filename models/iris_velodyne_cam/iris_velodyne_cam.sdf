@@ -10,7 +10,6 @@
     <include>
       <uri>model://depth_camera</uri>
       <pose>0.1 0 0 0 0 0</pose>
-      <name>depth_camera</name>
     </include>
     <joint name="depth_camera_joint" type="fixed">
       <child>depth_camera::link</child>
@@ -25,13 +24,13 @@
     </joint>
 
     <include>
-      <uri>model://fpv_camera</uri>
+      <uri>model://fpv_cam</uri>
       <pose>0.108 0 -0.01 0 1.5708 0</pose>
-      <name>fpv_camera</name>
+      <!-- <name>fpv_camera</name> -->
     </include>
 
     <joint name="fpv_camera_joint" type="fixed">
-      <child>fpv_camera::link</child>
+      <child>fpv_cam::link</child>
       <parent>iris::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>
