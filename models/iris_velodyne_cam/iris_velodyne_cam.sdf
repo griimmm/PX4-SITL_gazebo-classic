@@ -6,13 +6,14 @@
       <uri>model://iris</uri>
     </include>
 
+
     <include>
-      <uri>model://flow_cam</uri>
-      <pose>0.05 0 0 0 0 0</pose>
-      <name>camera1</name>
+      <uri>model://depth_camera</uri>
+      <pose>0.1 0 0 0 0 0</pose>
+      <name>depth_camera1</name>
     </include>
-    <joint name="flow_joint" type="fixed">
-      <child>camera1::link</child>
+    <joint name="depth_camera_joint" type="revolute">
+      <child>depth_camera1::link</child>
       <parent>iris::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>
@@ -24,12 +25,12 @@
     </joint>
 
     <include>
-      <uri>model://aruco_cam</uri>
-      <pose>-0.05 0 0 0 0 0</pose>
-      <name>camera2</name>
+      <uri>model://depth_camera</uri>
+      <pose>0.108 0 -0.01 0 1.5708 0</pose>
+      <name>depth_camera2</name>
     </include>
-    <joint name="aruco_joint" type="fixed">
-      <child>camera2::link</child>
+    <joint name="depth_camera_joint" type="revolute">
+      <child>depth_camera2::link</child>
       <parent>iris::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>
