@@ -94,7 +94,7 @@
       
       <plugin name="iris_pc" filename="libgazebo_ros_ray_sensor.so">
         <ros>     
-          <remapping>~/out:=pointcloud2</remapping>
+          <remapping>~/out:=velodyne_points</remapping>
         </ros>
         <!-- <always_on>true</always_on> -->
              <topicName>/velodyne_points</topicName>
