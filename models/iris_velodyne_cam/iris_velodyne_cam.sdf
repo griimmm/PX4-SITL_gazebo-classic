@@ -59,7 +59,7 @@
 
   <link name="iris_imu_link">
       <inertial>
-        <pose>-0.052 0 0.111 0 0 0</pose>
+        <pose> 0 0 0 0 0 0</pose>
         <inertia>
           <ixx>0.001</ixx>
           <ixy>0.000</ixy>
@@ -73,7 +73,7 @@
 
       <sensor name="tb3_imu" type="imu">
         <always_on>true</always_on>
-        <update_rate>20</update_rate>
+        <update_rate>200</update_rate>
         <imu>
           <angular_velocity>
             <x>
@@ -120,10 +120,10 @@
         <plugin name="iris_imu" filename="libgazebo_ros_imu_sensor.so">
           <ros>
             <!-- <namespace>/tb3</namespace> -->
-            <remapping>~/out:=imu2</remapping>
+            <remapping>~/out:=imu</remapping>
           </ros>
         </plugin>
-        
+
       </sensor>
     </link>
 
