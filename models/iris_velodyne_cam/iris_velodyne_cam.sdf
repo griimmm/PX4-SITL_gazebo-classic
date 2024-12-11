@@ -57,7 +57,85 @@
       </axis>
     </joint>
 
+  <link name="iris_imu_link">
+      <inertial>
+        <pose>-0.052 0 0.111 0 0 0</pose>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0.000</ixy>
+          <ixz>0.000</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0.000</iyz>
+          <izz>0.001</izz>
+        </inertia>
+        <mass>0.001</mass>
+      </inertial>
+
+      <sensor name="tb3_imu" type="imu">
+        <always_on>true</always_on>
+        <update_rate>20</update_rate>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+
+        <plugin name="iris_imu" filename="libgazebo_ros_imu_sensor.so">
+          <ros>
+            <!-- <namespace>/tb3</namespace> -->
+            <remapping>~/out:=imu2</remapping>
+          </ros>
+        </plugin>
+        
+      </sensor>
+    </link>
+
+    <joint name="iris_imu_joint" type="fixed">
+      <child>iris_imu_link</child>
+      <parent>iris::base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
   </model>
+
 </sdf>
 <!-- vim: set noet fenc=utf-8 ff=unix sts=0 sw=4 ts=4 : -->
 

@@ -30,38 +30,6 @@
           </mesh>
         </geometry>
       </visual>
-    </link>
-    
-    <link name="top">
-      <pose>0 0 0.095455 0 0 0</pose>
-      <inertial>
-        <mass>0.1</mass>
-        <inertia>
-          <ixx>0.000090623</ixx>
-          <iyy>0.000090623</iyy>
-          <izz>0.000091036</izz>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyz>0</iyz>
-        </inertia>
-      </inertial>
-      <collision name="top_collision">
-        <geometry>
-          <cylinder>
-            <radius>0.04267</radius>
-            <length>0.07357</length>
-          </cylinder>
-        </geometry>
-      </collision>
-      <visual name="top_visual">
-        <pose>0 0 -0.0376785 0 0 1.5707</pose>
-        <geometry>
-          <mesh>
-            <uri>model://velodyne_hdl32/meshes/velodyne_top.dae</uri>
-          </mesh>
-        </geometry>
-      </visual>
-
       <sensor type="ray" name="sensor">
         <pose>0 0 -0.004645 0 0 0</pose>
         <update_rate>10</update_rate>
@@ -106,19 +74,6 @@
       </plugin>
       </sensor>
     </link>
-
-    <joint type="revolute" name="joint">
-      <pose>0 0 -0.036785 0 0 0</pose>
-      <parent>base</parent>
-      <child>top</child>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>-10000000000000000</lower>
-          <upper>10000000000000000</upper>
-        </limit>
-      </axis>
-    </joint>
 
   </model>
 </sdf>
